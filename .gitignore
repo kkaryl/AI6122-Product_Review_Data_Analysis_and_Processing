@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+DataSet/CellPhoneReview.json
+
+SourceCode/01 Dataset Analysis/03 Tokenization and Stemming/data/backup/
+
+SourceCode/01 Dataset Analysis/03 Tokenization and Stemming/data/
