@@ -15,6 +15,7 @@ import time
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
 from nltk.stem import LancasterStemmer
+ matplotlib as p
 
 import filehelper as fh
 
@@ -92,12 +93,18 @@ else:
 
 tokens_len = []
 unique_tokens_len = []
+unique_tokens_count = {}
 
 for tokenlist in tokens:
     tokens_len.append(len(tokenlist))
     unique_tokens_len.append(len(set(tokenlist)))
+    
+for uniquecount in unique_tokens_len:
+    if not uniquecount in unique_tokens_count:
+        unique_tokens_count[uniquecount] = 1
+    else:
+        unique_tokens_count[uniquecount] += 1
 
-print("length of tokens: " + str(tokens_len))
-print("length of unique_tokens: " + str(unique_tokens_len))
+print("length of unique_tokens: " + str(unique_tokens_count))
 # unique_porter_stems = []
 # unique_lancaster = stems = list(set())
