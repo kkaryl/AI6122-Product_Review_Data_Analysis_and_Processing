@@ -15,7 +15,8 @@ import time
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
 from nltk.stem import LancasterStemmer
- matplotlib as p
+import matplotlib.pyplot as plt
+import numpy as np
 
 import filehelper as fh
 
@@ -61,6 +62,11 @@ tokens = []
 porter_stems = []
 lancaster_stems = []
 
+#summarytexts = list(data['summary'])
+#for i in range(0, len(reviewtexts)):
+#    if len(reviewtexts[i]) == 0 or not reviewtexts[i]:
+#        print(reviewtexts[i] + ":" + summarytexts[i])
+        
 if (not fh.is_not_empty_file_exists(tokenfile) or lazyload == False):
     print("Generating tokens using NLTK...")
     start_time = time.time()
@@ -91,20 +97,49 @@ else:
     lancaster_stems = fh.load_list_from_file(lancasterfile)
     print("Lancaster stemmed tokens lazily loaded from {} file.".format(lancasterfile))
 
-tokens_len = []
-unique_tokens_len = []
-unique_tokens_count = {}
-
-for tokenlist in tokens:
-    tokens_len.append(len(tokenlist))
-    unique_tokens_len.append(len(set(tokenlist)))
+def generate_unique_count_xy(list_of_tokenlists):
+    """ """
+    unique_token_len = [len(set(tokenlist)) for tokenlist in list_of_tokenlists]
+    unique_token_count = {}
     
-for uniquecount in unique_tokens_len:
-    if not uniquecount in unique_tokens_count:
-        unique_tokens_count[uniquecount] = 1
-    else:
-        unique_tokens_count[uniquecount] += 1
+    for tokenlen in unique_token_len:
+        if not tokenlen in unique_token_count:
+            unique_token_count[tokenlen] = 1
+        else:
+            unique_token_count[tokenlen] += 1
 
-print("length of unique_tokens: " + str(unique_tokens_count))
-# unique_porter_stems = []
-# unique_lancaster = stems = list(set())
+    tuples = sorted(unique_token_count.items()) # sorted by key, return a list of tuples
+    len_of_review, no_of_reviews = zip(*tuples) # unpack a list of pairs into two tuples
+    
+    return len_of_review, no_of_reviews
+    
+
+token_len, token_reviews = generate_unique_count_xy(tokens)
+porter_len, porter_reviews = generate_unique_count_xy(porter_stems)
+# lancaster_len, lancaster_reviews = generate_unique_count_xy(lancaster_stems)
+
+plt.style.use("seaborn-colorblind")
+fig, ax = plt.subplots(2,1)
+
+ax[0].hist([len(set(tokenlist)) for tokenlist in tokens], bins=20, histtype="step", label="tokens")
+ax[0].hist([len(set(tokenlist)) for tokenlist in porter_stems], bins=20, histtype="step", label="porter stems")
+ax[0].hist([len(set(tokenlist)) for tokenlist in lancaster_stems], bins=20, histtype="step", label="lancaster stems")
+
+ax[1].bar(token_len, token_reviews, alpha=0.5, color="b", label="tokens")
+ax[1].plot(token_len, token_reviews, alpha=0.5, color="b")
+ax[1].bar(porter_len, porter_reviews, alpha=0.5, color="g", label="porter stems")
+ax[1].plot(porter_len, porter_reviews, alpha=0.5, color="g")
+
+ax[0].set_title('Distribution of unique words over number of reviews')
+ax[0].set_ylabel('Number of reviews')
+ax[1].set_ylabel('Number of reviews')
+ax[1].set_xlabel('Number of unique words')
+ax[0].legend()
+ax[1].legend()
+
+ax[0].grid(True)
+fig.savefig("unique words vs review count.png", dpi=300)
+# ax.set_xticks([0, 100, 200, 300, 400, 500])
+# ax.set_xticklabels(["0", "100", "200", "300", ">=500"])
+#ax.xticks([0, 100, 200, 300, 400, 500])
+plt.show()
