@@ -46,7 +46,7 @@ if (not fh.is_not_empty_file_exists(jsonfile)):
 colname = args.columnname
 if not colname:
     raise ValueError("columnname cannot be empty.")
-lazyload = True # args.lazyload
+lazyload = args.lazyload
 tokenfile = args.tokenfile
 porterfile = args.porterfile
 lancasterfile = args.lancasterfile
