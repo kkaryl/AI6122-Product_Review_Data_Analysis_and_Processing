@@ -11,6 +11,7 @@ The following software(s) have to be installed on your system.
 
 1. Python
 2. Anaconda
+3. Copy "CellPhoneReview.json" to ./DataSet folder
 
 ## 2. Environment Setup
 
