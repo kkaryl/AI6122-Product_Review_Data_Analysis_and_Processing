@@ -16,7 +16,6 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
 from nltk.stem import LancasterStemmer
 import matplotlib.pyplot as plt
-import numpy as np
 
 import filehelper as fh
 
@@ -61,11 +60,6 @@ reviewtexts = list(data[colname])
 tokens = []
 porter_stems = []
 lancaster_stems = []
-
-#summarytexts = list(data['summary'])
-#for i in range(0, len(reviewtexts)):
-#    if len(reviewtexts[i]) == 0 or not reviewtexts[i]:
-#        print(reviewtexts[i] + ":" + summarytexts[i])
         
 if (not fh.is_not_empty_file_exists(tokenfile) or lazyload == False):
     print("Generating tokens using NLTK...")
@@ -116,30 +110,26 @@ def generate_unique_count_xy(list_of_tokenlists):
 
 token_len, token_reviews = generate_unique_count_xy(tokens)
 porter_len, porter_reviews = generate_unique_count_xy(porter_stems)
-# lancaster_len, lancaster_reviews = generate_unique_count_xy(lancaster_stems)
+lancaster_len, lancaster_reviews = generate_unique_count_xy(lancaster_stems)
 
 plt.style.use("seaborn-colorblind")
-fig, ax = plt.subplots(2,1)
+fig, ax = plt.subplots(3,1, sharex=True)
 
-ax[0].hist([len(set(tokenlist)) for tokenlist in tokens], bins=20, histtype="step", label="tokens")
-ax[0].hist([len(set(tokenlist)) for tokenlist in porter_stems], bins=20, histtype="step", label="porter stems")
-ax[0].hist([len(set(tokenlist)) for tokenlist in lancaster_stems], bins=20, histtype="step", label="lancaster stems")
-
-ax[1].bar(token_len, token_reviews, alpha=0.5, color="b", label="tokens")
-ax[1].plot(token_len, token_reviews, alpha=0.5, color="b")
-ax[1].bar(porter_len, porter_reviews, alpha=0.5, color="g", label="porter stems")
-ax[1].plot(porter_len, porter_reviews, alpha=0.5, color="g")
+ax[0].plot(token_len, token_reviews, alpha=0.5, color="b", label="tokens")
+ax[1].plot(porter_len, porter_reviews, alpha=0.5, color="g", label="porter stems")
+ax[2].plot(lancaster_len, lancaster_reviews, alpha=0.5, color="r", label="lancaster stems")
 
 ax[0].set_title('Distribution of unique words over number of reviews')
-ax[0].set_ylabel('Number of reviews')
-ax[1].set_ylabel('Number of reviews')
-ax[1].set_xlabel('Number of unique words')
+ax[0].set_ylabel('# of reviews')
+ax[1].set_ylabel('# of reviews')
+ax[2].set_ylabel('# of reviews')
+ax[2].set_xlabel('Number of unique words')
 ax[0].legend()
 ax[1].legend()
+ax[2].legend()
 
 ax[0].grid(True)
-fig.savefig("unique words vs review count.png", dpi=300)
-# ax.set_xticks([0, 100, 200, 300, 400, 500])
-# ax.set_xticklabels(["0", "100", "200", "300", ">=500"])
-#ax.xticks([0, 100, 200, 300, 400, 500])
+ax[1].grid(True)
+ax[2].grid(True)
+fig.savefig("unique words vs review count.png", dpi=500)
 plt.show()
