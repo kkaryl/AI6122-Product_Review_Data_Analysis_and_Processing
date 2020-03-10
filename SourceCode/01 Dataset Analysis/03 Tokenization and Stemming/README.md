@@ -19,4 +19,4 @@ python tokenizerandstemmer.py
 
 ## Example Output
 
- ![distribution](./unique words vs review count.png)
+ ![distribution](unique words vs review count.png)
