@@ -67,6 +67,14 @@ Sentiment: Positive
    - [best_model_hidden_128_eval.pt](https://drive.google.com/open?id=1-3kUIndJRKhNhzhBwKtCJ_sFNCdgNAIS)
 3. Run this code in colab with GPU backend.
 
+**Notice**
+
+Labels in train_data and test_data are different with the original dataset.
+
+Torchtext helps to change the label accoring to the different class proporation.(positive > negative > neutral)
+
+Now *<u>0 means positive. 1 means negative. 2 means neutral.</u>*
+
 #### BiLSTM.py
 
 Model definition.
