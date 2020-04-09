@@ -1,16 +1,30 @@
 # Review Summarizer Task
 
-### TODO List
+## Pre-requisites
 
-- [ ] Define and justify what a summarizer is. E.g.
-  + a list of keywords
-  + a list of key phrases
-  + a list of noun-adjective pairs 
-  + a list of nounPhrase - adjectivePhrase pairs 
-  + a list of representative sentences 
-- [ ] Technical challenges to achieve ideal summarization and your solution.
-- [ ] Justify approach is best option for each component in your solution.
-- [ ] Justify limitations to your approach.
-- [ ] Evaluate solution with possible alternative solutions (baselines).
-- [ ] Randomly choose 3 products to create product review summary.
+1. Copy "CellPhoneReview.json" folder to root. Otherwise, update `parameters['json_file']` to filepath.
+
+2. Install Spacey 
+
+   ```shell
+   !pip install Spacey
+   ```
+
+   
+
+3. Install NLTK packages
+
+   ```shell
+   !pip install NLTK
+   ```
+
+   
+
+## Pre-processed DataSets
+
+You may download the following preprocessed datasets to prevent long run times:
+
+1. [prod_reviews.data](https://drive.google.com/open?id=1-ClyKPajZT2ZUD7cyq0EuLu2UJAShY_P)
+2. [prod_reviews_cleaned.data](https://drive.google.com/open?id=1FoP23_RLrftHiPv1HlylVxQie8Z_mQvz)
+3. [word_doc_frequencies](https://drive.google.com/open?id=16WDSAU_NOhv2H-9dSj7kyFOQKAXdsZ_q)
 
