@@ -22,7 +22,7 @@
 
 ## Pre-processed DataSets
 
-You may download the following preprocessed datasets to prevent long run times:
+You may download the following preprocessed datasets and place them in "/data" folder to prevent long run times:
 
 1. [prod_reviews.data](https://drive.google.com/open?id=1-ClyKPajZT2ZUD7cyq0EuLu2UJAShY_P)
 2. [prod_reviews_cleaned.data](https://drive.google.com/open?id=1FoP23_RLrftHiPv1HlylVxQie8Z_mQvz)
